@@ -17,10 +17,6 @@ const mongoose  = require("mongoose");
       type:String,
       require:true,
     },
-    image:{
-      type: String,
-      require:true,
-    }
   },{timestamps:true});
   
   const userModel=mongoose.model("Users",userSchema);
