@@ -1,7 +1,8 @@
 const mongoose= require("mongoose");
+
 schema=mongoose.Schema;
 
-const apartmentSchema = new Schema(
+const appartementSchema = new schema(
   {
     building: {
       type: String,
@@ -9,10 +10,6 @@ const apartmentSchema = new Schema(
     },
     floor: {
       type: Number,
-      required: true,
-    },
-    name: {
-      type: String,
       required: true,
     },
     owner: {
@@ -27,11 +24,6 @@ const apartmentSchema = new Schema(
       type: Boolean,
       default: false,
     }
-    },
-  { timestamps: true }
-);
-
-const Apartment = mongoose.model("Appertement",apartmentSchema);
-
-
-module.exports = Apartment;
+    },{ timestamps: true }
+  );
+  module.exports = mongoose.model("Appartement", appartementSchema);
