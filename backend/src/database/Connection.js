@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const DATABASE_URL = process.env.DATABASE_URL
-class ConnectionController{
+class Connection{
   static conn(){
     mongoose.connect(DATABASE_URL,{dbName:"sandyc"})
     const db = mongoose.connection
@@ -11,4 +11,4 @@ class ConnectionController{
   });
   }
 }
-module.exports=ConnectionController
+module.exports=Connection

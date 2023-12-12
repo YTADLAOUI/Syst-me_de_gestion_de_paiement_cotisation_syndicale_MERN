@@ -4,20 +4,18 @@ const AuthService = require("../services/AuthService");
 class Authentification{
 
   static login(req,res){
-      const {name,password} =req.body;
-        if(  name!=="arbi"  || password !== "123456789" ){
+      const {email,password} =req.body;
+        if(  email!=="youssef@tadlaoui.com"  || password !== "123456789" ){
           return res.status(400).json({err:"info incorrect"})
         }
-       const token=  AuthService.generateToken(name,'48h')
+       const token=  AuthService.generateToken("youssef",'48h')
           res.cookie("authToken", token, {
             httpOnly: true,
             secure: true,
             sameSite: "none",
         });
-        
-        res.status(200).json({ success: "Logged in successfully", user: name });
+        res.status(200).json({ success: "Logged in successfully", dataUser:{token:token,user:"youssef"}});
   }
-
 }
 
 

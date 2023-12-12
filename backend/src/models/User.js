@@ -17,10 +17,6 @@ const mongoose  = require("mongoose");
       type:String,
       require:true,
     },  
-    role:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref:'roles'
-    },
     isEmailVerfied:{
       type:Boolean,
       require:true
