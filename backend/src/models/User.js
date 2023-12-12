@@ -16,7 +16,19 @@ const mongoose  = require("mongoose");
     password:{
       type:String,
       require:true,
+    },  
+    role:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'roles'
     },
+    isEmailVerfied:{
+      type:Boolean,
+      require:true
+    },
+    isDeleted:{
+      type:Boolean,
+      require:true
+    }
   },{timestamps:true});
   
   const userModel=mongoose.model("Users",userSchema);
