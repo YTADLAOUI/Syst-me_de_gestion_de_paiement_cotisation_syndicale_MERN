@@ -12,6 +12,10 @@ const appartementSchema = new schema(
       type: Number,
       required: true,
     },
+    address:{
+      type: String,
+      required: true
+    },
     owner: {
       type: String,
       default: null,

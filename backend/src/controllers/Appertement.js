@@ -14,6 +14,16 @@ class Appertement{
         res.status(400).json({ error: "Something went wrong" });
     }
 };
+     static async getAllAppartements(req, res) {
+      try{ 
+        const Appartement = await appartement.find({ isDeleted: false });
+      return res.status(200).json(Appartement);
+    }catch(e){
+      console.log(e);
+      res.status(400).json({ error: "Something went wrong"});
+    }  
+};
+     
 }
 
 module.exports=Appertement;
