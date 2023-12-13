@@ -11,7 +11,7 @@ class Appertement{
         res.json({ success: "Appartement created successfully", Appartement });
     } catch (e) {
         console.log(e);
-        res.status(400).json({ error: "Something went wrong" });
+        res.status(400).json({ error: "An error occurred" });
     }
 };
      static async getAllAppartements(req, res) {
@@ -20,10 +20,29 @@ class Appertement{
       return res.status(200).json(Appartement);
     }catch(e){
       console.log(e);
-      res.status(400).json({ error: "Something went wrong"});
+      res.status(400).json({ error: "An error occurred"});
     }  
 };
-     
+static async  updateAppartement(req, res){
+  try {
+      const { id } = req.params;
+      const updatedAppartement = await appartement.findByIdAndUpdate(
+          id,
+          req.body
+      );
+      if (!updatedAppartement) {
+          return res.status(404).json({ error: "Appartement not found" });
+      }
+      res.status(200).json({
+          success: "Appartement updated successfully",
+          updatedAppartement,
+      });
+  } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: "An error occurred" });
+  }
+};
+
 }
 
 module.exports=Appertement;
