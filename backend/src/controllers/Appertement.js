@@ -1,5 +1,4 @@
 const appartement = require("../models/appertement");
-// const Appartement=require("../models/appertement");
 
 class Appertement{
   static async createAppartement(req, res){
@@ -23,7 +22,7 @@ class Appertement{
       res.status(400).json({ error: "An error occurred"});
     }  
 };
-static async  updateAppartement(req, res){
+     static async  updateAppartement(req, res){
   try {
       const { id } = req.params;
       const updatedAppartement = await appartement.findByIdAndUpdate(
@@ -42,7 +41,22 @@ static async  updateAppartement(req, res){
       res.status(400).json({ error: "An error occurred" });
   }
 };
-
+static  async deleteAppartement(req, res){
+  try {
+      const { id } = req.params;
+      const deletedAppartement = await appartement.findByIdAndUpdate(id,{isDeleted:true});
+      if (!deletedAppartement) {
+          return res.status(404).json({ error: "Appartement not found" });
+      }
+      res.json({
+          success: "Appartement deleted successfully",
+          deletedAppartement,
+      });
+  } catch (e) {
+      console.log(e);
+      res.status(400).json({ error: "An error occurred" });
+  }
+};
 }
 
 module.exports=Appertement;
