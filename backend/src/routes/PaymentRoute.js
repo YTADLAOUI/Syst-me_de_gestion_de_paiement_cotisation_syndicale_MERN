@@ -1,9 +1,8 @@
 const express= require("express");
-const Payment = require("../controllers/payment");
-const route= express.Router();
+const Payment = require("../controllers/Payments")
+const rout= express.Router();
 
+rout.post('/create',Payment.createPayments);
+rout.get('/payments',Payment.getAppartementPaye);
 
-route.post('/createPayment',Payment.createPayment);
-
-
-module.exports=route;
+module.exports=rout;

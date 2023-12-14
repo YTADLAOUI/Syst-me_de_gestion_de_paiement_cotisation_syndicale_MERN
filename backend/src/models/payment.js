@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-
-const paymentSchema = new mongoose.Schema({
+schema= mongoose.Schema;
+const paymentSchema = new schema({
     amount: {
         type: String,
         required: true,
@@ -15,7 +15,7 @@ const paymentSchema = new mongoose.Schema({
   },
     appartement: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Appertement",
+        ref: "Appartement",
         required: true,
     },
     isDeleted: {
