@@ -41,7 +41,6 @@ class Payments{
             month:month,
             year:year,
             isDeleted:false,
-            appartement:{$in: getAllAppertements.map((appertement)=>(appertement._id))}
      }).populate("appartement");
         console.log(getAppertementPaye, "helloo");
   
