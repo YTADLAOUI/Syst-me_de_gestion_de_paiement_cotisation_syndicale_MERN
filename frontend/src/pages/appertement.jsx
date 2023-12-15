@@ -4,8 +4,8 @@ import Tableau from '../components/tableau';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
-import DynamicFormComponent from '../components/DynamicForm';
-
+import { Button } from "@mui/material";
+import DynamicFormModal from "../components/modal";
 const CustomRowActions = ({ onEditClick, onDeleteClick }) => (
   <>
     <EditIcon onClick={onEditClick} style={{ cursor: 'pointer', marginRight: 8 }} />
@@ -14,7 +14,19 @@ const CustomRowActions = ({ onEditClick, onDeleteClick }) => (
 );
 const Appertement = () => {
   const [rows, setRows] = useState([]);
+  const [open, setOpen] = useState(false);
 
+  const openModal = () => {
+    setOpen(true);
+  };
+
+  const closeModal = () => {
+    setOpen(false);
+  };
+
+  const handleFormSubmit = (formData) => {
+    console.log("Form Data:", formData);
+  };
   useEffect(() => {
     const getAppartement = async () => {
       try {
@@ -33,12 +45,10 @@ const Appertement = () => {
     getAppartement();
   }, []);
   const handleEditClick = (id) => {
-    // Implement your logic for handling edit click
     console.log(`Edit clicked for id: ${id}`);
   };
 
   const handleDeleteClick = (id) => {
-    // Implement your logic for handling delete click
     console.log(`Delete clicked for id: ${id}`);
   };
 
@@ -47,6 +57,12 @@ const Appertement = () => {
       onEditClick={() => handleEditClick(id)}
       onDeleteClick={() => handleDeleteClick(id)}
     />)
+    const dynamicFormFields = [
+      { name: "owner", label: "Owner" },
+      { name: "lastName", label: "Last Name" },
+      { name: "email", label: "Email" },
+      // Add more form fields as needed
+    ];
   const columns = [
     {
       field: 'address',
@@ -81,12 +97,23 @@ const Appertement = () => {
     },
   ];
 
-  
+ 
 
   return (
     <>
       <Header />
-      <DynamicFormComponent/>
+      <div style={{ textAlign: "end", margin: 10 }}>
+        <Button onClick={openModal} color="primary" variant="contained">
+          Create Appartement
+        </Button>
+        <DynamicFormModal
+          open={open}
+          onClose={closeModal}
+          title="Dynamic Form Modal"
+          formFields={dynamicFormFields}
+          onSubmit={handleFormSubmit}
+        />
+      </div>
       <Tableau columns={columns} rows={rows} customRowActions={renderRowActions}/>
     </>
   );
