@@ -46,18 +46,8 @@ import { DataGrid } from '@mui/x-data-grid';
 //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 // ];
 
-export default function DataGridDemo({rows,columns, customRowActions}) {
-  console.log(rows,"row")
-  console.log(columns,"coulmn")
-  const extendedColumns = [
-    ...columns,
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 120,
-      renderCell: (params) => customRowActions(params.id),
-    },
-  ];
+export default function DataGridDemo({rows,columns}) {
+ 
   return (
     <Box
       sx={{
@@ -71,7 +61,7 @@ export default function DataGridDemo({rows,columns, customRowActions}) {
       <Box sx={{ height: 400, width: '80%' }}>
         <DataGrid
           rows={rows}
-          columns={extendedColumns}
+          columns={columns}
           initialState={{
             pagination: {
               paginationModel: {

@@ -15,8 +15,11 @@ const CustomRowActions = ({ onEditClick, onDeleteClick }) => (
 const Appertement = () => {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
-
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false);
   const openModal = () => {
+    setIsEditMode(false);
     setOpen(true);
   };
 
@@ -24,32 +27,42 @@ const Appertement = () => {
     setOpen(false);
   };
 
-  const handleFormSubmit = (formData) => {
-    console.log("Form Data:", formData);
+  const getAppartement = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/appertement/getAllAppertement");
+      const transformedRows = response.data.map((item, index) => ({
+         id: item._id, 
+        _id:index,
+        ...item,
+      }));
+      setRows(transformedRows);
+    } catch (e) {
+      console.log(e.message);
+    }
   };
   useEffect(() => {
-    const getAppartement = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/appertement/getAllAppertement");
-        const transformedRows = response.data.map((item, index) => ({
-           id: item._id, 
-          _id:index,
-          ...item,
-        }));
-        setRows(transformedRows);
-      } catch (e) {
-        console.log(e.message);
-      }
-    };
-
     getAppartement();
   }, []);
+  const handleFormSubmit = async (formData) => {
+    try {
+      const response= await axios.post("http://localhost:5000/api/appertement/AddAppartement",formData)
+      console.log(response.data,"res");
+      getAppartement();
+    } catch (error) {
+      console.log(error.mes)
+    }
+  };
   const handleEditClick = (id) => {
-    console.log(`Edit clicked for id: ${id}`);
+   
+    openEditModalHandler(id);
   };
 
   const handleDeleteClick = (id) => {
-    console.log(`Delete clicked for id: ${id}`);
+    try {
+      
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 
   const renderRowActions = (id) => (
@@ -57,11 +70,50 @@ const Appertement = () => {
       onEditClick={() => handleEditClick(id)}
       onDeleteClick={() => handleDeleteClick(id)}
     />)
+ 
+    const validateOwner = (value) => {
+      if (!value || !value.trim()) {
+        return "Name require";
+      }
+      return null; 
+    };
+    
+    const validateBuilding = (value) => {
+      
+      if (isNaN(value)||!value || !value.trim()) {
+        return "Must be a valid number";
+      }
+      return null; 
+    };
+    
+    const validateFloor = (value) => {
+      
+      if (isNaN(value)||!value || !value.trim()) {
+        return "Must be a valid number";
+      }
+      return null; 
+    };
+    
+    const validateAddress = (value) => {
+      if (!value || !value.trim()) {
+        return "Address cannot be empty";
+      }
+      return null; 
+    };
+    
+    const validatePhoneNumber = (value) => {
+     
+      if (isNaN(value)) {
+        return "Must be a valid number";
+      }
+      return null; 
+    };
     const dynamicFormFields = [
-      { name: "owner", label: "Owner" },
-      { name: "lastName", label: "Last Name" },
-      { name: "email", label: "Email" },
-      // Add more form fields as needed
+      { name: "owner", label: "Owner", validate: validateOwner },
+      { name: "building", label: "Building", type: "number", validate: validateBuilding },
+      { name: "floor", label: "Floor", type: "number", validate: validateFloor },
+      { name: "address", label: "Address", validate: validateAddress },
+      { name: "ownerPhoneNumber", label: "Owner Phone Number", type: "number", validate: validatePhoneNumber },
     ];
   const columns = [
     {
@@ -95,9 +147,34 @@ const Appertement = () => {
       width: 200,
       editable: true,
     },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 120,
+      renderCell: (params) => renderRowActions(params.id),
+    },
   ];
+  const openEditModalHandler = (id) => {
+    setIsEditMode(true);
+    setSelectedRowId(id);
+    setOpenEditModal(true);
+  };
 
- 
+  const closeEditModalHandler = () => {
+    setSelectedRowId(null);
+    setOpenEditModal(false);
+  };
+ const handleEditSubmit=async(formData)=>{
+  try {
+    const response= await axios.put(`http://localhost:5000/api/appertement/updateAppertement/${selectedRowId}`,formData)
+        console.log(response.data,"what");
+        getAppartement();
+  } catch (error) {
+    console.log(error.message)
+  }
+  console.log(formData,"edit")
+  console.log(selectedRowId,'_id')
+ }
 
   return (
     <>
@@ -109,12 +186,21 @@ const Appertement = () => {
         <DynamicFormModal
           open={open}
           onClose={closeModal}
-          title="Dynamic Form Modal"
+          title="ADD APPARTEMENT"
           formFields={dynamicFormFields}
+          isEditMode={isEditMode}
           onSubmit={handleFormSubmit}
         />
+         <DynamicFormModal
+          open={openEditModal}
+          onClose={closeEditModalHandler}
+          title="EDIT APPARTEMENT"
+          formFields={dynamicFormFields}
+          isEditMode={isEditMode}
+          onSubmit={handleEditSubmit}
+        />
       </div>
-      <Tableau columns={columns} rows={rows} customRowActions={renderRowActions}/>
+      <Tableau columns={columns} rows={rows}/>
     </>
   );
 };
