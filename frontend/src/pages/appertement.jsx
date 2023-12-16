@@ -57,9 +57,11 @@ const Appertement = () => {
     openEditModalHandler(id);
   };
 
-  const handleDeleteClick = (id) => {
+  const handleDeleteClick = async(id) => {
     try {
-      
+      const response=await axios.put(`http://localhost:5000/api/appertement/delete/${id}`);
+      console.log(response.data)
+      getAppartement();
     } catch (error) {
       console.log(error.message)
     }
@@ -179,7 +181,7 @@ const Appertement = () => {
   return (
     <>
       <Header />
-      <div style={{ textAlign: "end", margin: 10 }}>
+      <div style={{ textAlign: "end", marginTop: 20,marginRight:50 }}>
         <Button onClick={openModal} color="primary" variant="contained">
           Create Appartement
         </Button>
