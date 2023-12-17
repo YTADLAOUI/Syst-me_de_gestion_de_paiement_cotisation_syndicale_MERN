@@ -112,9 +112,10 @@ const renderRowActions = (id) => (
   }
   const handleImprimClick=async(id)=>{
     try {
-      const response =await axios.post("http://localhost:5000/api/payments/generate",{id:id})
-      console.log(response.data);
-      
+      // const response =await axios.post("http://localhost:5000/api/payments/generate",{id:id})
+      // console.log(response.data);
+      const url = `http://localhost:5000/api/payments/generate/${id}`;
+        window.open(url, "_blank");
     } catch (error) {
       
     }

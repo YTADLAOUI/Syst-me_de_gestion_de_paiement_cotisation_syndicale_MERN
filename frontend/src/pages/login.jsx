@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import loginImage from '../assets/images/login.jpg';
-
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
-
-
+const[Err,setErr]=useState(null)
+const navigate=useNavigate()
   const backgroundStyle = {
     backgroundImage: `url(${loginImage})`,
     backgroundSize: 'cover',
@@ -12,10 +13,24 @@ const Login = () => {
   };
   const { handleSubmit, control, formState: {errors}, getValues} = useForm();
   
-   const onSubmit = (data) => {
-     console.log(data);
-}
+   const onSubmit = async(data) => {
+     try {
+      console.log(data)
+        const response = await axios.post("http://localhost:5000/api/auth/login",data);
+        console.log(response.data);
+        if(!! response.data.success) {
+          localStorage.setItem('token',JSON.stringify(response.data.dataUser.token))
+          navigate('/appertement')}
+        else{
+          setErr("please check your info");
+        }
+     } catch (error) {
 
+     }
+
+     
+}
+console.log(Err)
   return (
     <>
       <div className="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
@@ -83,6 +98,7 @@ const Login = () => {
                   Log in
                 </button>
               </div>
+              <span>{Err}</span>
             </form>
             <div className="text-sm flex justify-between items-center mt-3">
               <p>If you don't have an account...</p>

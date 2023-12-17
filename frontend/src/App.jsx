@@ -5,6 +5,7 @@ import Register from './pages/register'
 import { Route, Routes } from 'react-router-dom'
 import Appertement from './pages/appertement'
 import Paie from './pages/payment'
+import AuthMiddle from './middlewares/authMiddle'
 function App() {
  
 
@@ -13,8 +14,13 @@ function App() {
     <Routes>
       <Route path='/login' element={<Login/>} />
       <Route path='/register' element={<Register/>} />
-      <Route path='/appertement' element={<Appertement/>} />
-      <Route path='/paie' element={<Paie/>} />
+      <Route path='/appertement' element={
+          <AuthMiddle>
+            <Appertement/>
+          </AuthMiddle>}
+         />
+      <Route path='/paie' element={<AuthMiddle><Paie/></AuthMiddle>} />
+      <Route path="*" element={<h3 className='w-full h-full flex justify-center items-center'>page Not Fond</h3>} />
     </Routes>
    </>
   )
