@@ -75,9 +75,7 @@ const renderRowActions = (id) => (
       renderCell: (params) => renderRowActions(params.id),
     },
   ];
- const handlePaimentClick= (id)=>{
-  console.log(id,"pieRow")
- }
+
 const handleImprimClick=(id)=>{
   console.log(id,"ghjk")
 }
@@ -105,6 +103,16 @@ const getAllAppertement= async()=>{
     useEffect(()=>{
       getAllAppertement();
     },[])
+    const handlePaimentClick= async(id)=>{
+      console.log(id)
+      try {
+        const response =await axios.post("http://localhost:5000/api/payments/create",{id:id})
+        console.log(response.data);
+        getAllAppertement();
+      } catch (error) {
+        console.log(error.message)
+      }
+     }
   return (
     <>
      <Header />

@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 schema= mongoose.Schema;
 const paymentSchema = new schema({
-    amount: {
-        type: String,
-        required: true,
-    },
     month: {
       type: Number,
       required: true,

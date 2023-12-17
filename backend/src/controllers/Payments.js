@@ -4,10 +4,10 @@ const payment=require("../models/payment")
 class Payments{
 
   static async createPayments(req,res){
-    console.log(req.body);
 
     try{
-      const { id } = req.params;
+      const { id } = req.body;
+      console.log(id)
       const currentDate = new Date();
       const month = currentDate.getMonth() + 1;
       const year = currentDate.getFullYear();
@@ -32,7 +32,7 @@ class Payments{
   static async getAppartementPaye(req,res){
     try{
       const getAllAppertements= await appertement.find({isDeleted:false});
-      console.log(getAllAppertements)
+      // console.log(getAllAppertements)
       const currentDate = new Date();
       const month = currentDate.getMonth() + 1;
       const year = currentDate.getFullYear();
@@ -54,7 +54,7 @@ class Payments{
       console.log(e)
        return res.status(500).json("An error occurred")
     }
- 
 }
+
 }
 module.exports=Payments;
