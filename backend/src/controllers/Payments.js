@@ -7,20 +7,19 @@ class Payments{
     console.log(req.body);
 
     try{
-      const {amount, idAppartement} =req.body;
+      const { id } = req.params;
       const currentDate = new Date();
       const month = currentDate.getMonth() + 1;
       const year = currentDate.getFullYear();
 
       const createPayment=new payment(
         {
-          amount:amount,
-          appartement:idAppartement,
+          appartement:id,
           month:month,
           year:year
         }
       )
-      if(!createPayment || !amount || !idAppartement){
+      if(!createPayment || !id){
        return res.status(400).json("Payment creation not completed.")
       }
       const savePayment=await createPayment.save();
@@ -42,15 +41,13 @@ class Payments{
             year:year,
             isDeleted:false,
      }).populate("appartement");
-        console.log(getAppertementPaye, "helloo");
-  
         const paidAppartmentsIds = getAppertementPaye.map((payment) =>
         String(payment.appartement._id)
     );
+    const paidsAppertement=getAllAppertements.filter((appertement)=>paidAppartmentsIds.includes(String(appertement._id)))
     const unpaidAppartments = getAllAppertements.filter(
         (appertement) => !paidAppartmentsIds.includes(String(appertement._id))
     );
-  console.log(unpaidAppartments)
             return res.status(200).json({paids:getAppertementPaye,unpaids:unpaidAppartments})
      }
     catch(e){

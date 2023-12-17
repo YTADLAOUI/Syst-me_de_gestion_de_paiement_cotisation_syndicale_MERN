@@ -8,8 +8,8 @@ import { Button } from "@mui/material";
 import DynamicFormModal from "../components/modal";
 const CustomRowActions = ({ onEditClick, onDeleteClick }) => (
   <>
-    <EditIcon onClick={onEditClick} style={{ cursor: 'pointer', marginRight: 8 }} />
-    <DeleteIcon onClick={onDeleteClick} style={{ cursor: 'pointer' }} />
+    <EditIcon onClick={onEditClick} style={{ cursor: 'pointer', marginRight: 8,color:'orange' }} />
+    <DeleteIcon onClick={onDeleteClick} style={{ cursor: 'pointer',color:'red'  }} />
   </>
 );
 const Appertement = () => {
@@ -58,6 +58,7 @@ const Appertement = () => {
   };
 
   const handleDeleteClick = async(id) => {
+    alert("are you sure you wante delete this row")
     try {
       const response=await axios.put(`http://localhost:5000/api/appertement/delete/${id}`);
       console.log(response.data)
