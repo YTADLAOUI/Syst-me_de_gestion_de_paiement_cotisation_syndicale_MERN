@@ -55,6 +55,15 @@ class Payments{
        return res.status(500).json("An error occurred")
     }
 }
-
+      static async generateFacturePaie(req,res){
+                try {
+                  const {id}=req.body
+                  const OneAppartement= await appertement.find({_id:id})
+                    
+                } catch (error) {
+                  console.log(error)
+                  return res.status(500).json("An error occurred")
+                }
+      }
 }
 module.exports=Payments;

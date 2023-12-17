@@ -76,43 +76,49 @@ const renderRowActions = (id) => (
     },
   ];
 
-const handleImprimClick=(id)=>{
-  console.log(id,"ghjk")
-}
-const getAllAppertement= async()=>{
-  try {
-    const response=await axios.get("http://localhost:5000/api/payments/payments")
-    const appartementPaied= response.data.paids.map((res)=>res.appartement)
-    console.log(appartementPaied,"hello")
-       const rows = response.data.unpaids.map((item,index)=>({
-            id:item._id,
-            _id:index,
+  const getAllAppertement= async()=>{
+    try {
+      const response=await axios.get("http://localhost:5000/api/payments/payments")
+      const appartementPaied= response.data.paids.map((res)=>res.appartement)
+      console.log(appartementPaied,"hello")
+      const rows = response.data.unpaids.map((item,index)=>({
+        id:item._id,
+        _id:index,
             ...item
        }))
        const data=appartementPaied.map((item,index)=>({
         id:item._id,
         _id:index,
         ...item
-       }))
-       setPaied(data);
-       setUnpaie(rows);
-  } catch (error) {
-    console.log(error.message)
+      }))
+      setPaied(data);
+      setUnpaie(rows);
+    } catch (error) {
+      console.log(error.message)
+    }
   }
-}
-    useEffect(()=>{
+  useEffect(()=>{
+    getAllAppertement();
+  },[])
+  const handlePaimentClick= async(id)=>{
+    console.log(id)
+    try {
+      const response =await axios.post("http://localhost:5000/api/payments/create",{id:id})
+      console.log(response.data);
       getAllAppertement();
-    },[])
-    const handlePaimentClick= async(id)=>{
-      console.log(id)
-      try {
-        const response =await axios.post("http://localhost:5000/api/payments/create",{id:id})
-        console.log(response.data);
-        getAllAppertement();
-      } catch (error) {
-        console.log(error.message)
-      }
-     }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+  const handleImprimClick=async(id)=>{
+    try {
+      const response =await axios.post("http://localhost:5000/api/payments/generate",{id:id})
+      console.log(response.data);
+      
+    } catch (error) {
+      
+    }
+  }
   return (
     <>
      <Header />
