@@ -1,4 +1,4 @@
-# Systme_de_gestion_de_paiement_cotisation_syndicale_MERN
+# Systme de gestion de paiement cotisation syndicale
 Dans votre agence web, un client demande de créer un système de gestion de paiement cotisation syndicale pour chaque mois
 
 ## Prerequisites
