@@ -1,0 +1,25 @@
+version: '3.8'
+
+
+
+
+services:
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: express-server-app
+    command: npm start
+    ports:
+      - "7000:5000"
+    
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: npm run dev
+    image: react-app
+    
+    ports:
+      - "5173:5173"

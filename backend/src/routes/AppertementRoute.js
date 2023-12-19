@@ -1,7 +1,7 @@
 express= require("express");
 
 const Appartement = require("../controllers/Appertement");
-const AuthMiddle = require("../middlewares/authMiddle");
+const AuthMiddle = require("../middlewares/AuthMiddless");
 const route= express.Router();
 
     route.post("/AddAppartement",AuthMiddle.userLogged,Appartement.createAppartement);

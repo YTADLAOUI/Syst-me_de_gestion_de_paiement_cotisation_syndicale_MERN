@@ -1,10 +1,9 @@
 const { validateToken } = require("../services/AuthService");
 const cookieParser = require('cookie-parser');
-class AuthMiddle{
+class AuthMiddless{
   static userLogged(req, res, next) {
     cookieParser()(req, res, () => {});
     const token = req.cookies.Token; 
-    console.log(token, "hello");
     if (token) {
       const verify = validateToken(token);
       console.log(verify, "Verify");
@@ -15,4 +14,4 @@ class AuthMiddle{
   }
 
 }
-module.exports=AuthMiddle
+module.exports=AuthMiddless

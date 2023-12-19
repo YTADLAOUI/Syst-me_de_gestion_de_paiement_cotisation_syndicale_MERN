@@ -1,6 +1,6 @@
 const express= require("express");
 const Payment = require("../controllers/Payments");
-const AuthMiddle = require("../middlewares/authMiddle");
+const AuthMiddle = require("../middlewares/AuthMiddless");
 const rout= express.Router();
 
 rout.post('/create',AuthMiddle.userLogged,Payment.createPayments);
