@@ -5,6 +5,6 @@ const rout= express.Router();
 
 rout.post('/create',AuthMiddle.userLogged,Payment.createPayments);
 rout.get('/payments',AuthMiddle.userLogged,Payment.getAppartementPaye);
-rout.get('/generate/:id',AuthMiddle.userLogged,Payment.generateFacturePaie);
+rout.post('/generate',AuthMiddle.userLogged,Payment.generateFacturePaie);
 
 module.exports=rout;
