@@ -15,9 +15,10 @@ function App() {
       <Route path='/login' element={<Login/>} />
       <Route path='/register' element={<Register/>} />
       <Route path='/appertement' element={
-          <AuthMiddle>
+         <AuthMiddle>
             <Appertement/>
-          </AuthMiddle>}
+         </AuthMiddle> 
+          }
          />
       <Route path='/paie' element={<AuthMiddle><Paie/></AuthMiddle>} />
       <Route path="*" element={<h3 className='w-full h-full flex justify-center items-center'>page Not Fond</h3>} />

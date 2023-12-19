@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 // const columns = [
 //   // { field: 'id', headerName: 'ID', width: 90 },
@@ -46,8 +48,11 @@ import { DataGrid } from '@mui/x-data-grid';
 //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 // ];
 
-export default function DataGridDemo({rows,columns}) {
- 
+export default function DataGridDemo({rows,columns,title}) {
+    const  [name,setName]=useState(null)
+    useEffect(()=>{
+        setName(title)
+    },[])
   return (
     <Box
       sx={{
@@ -58,7 +63,8 @@ export default function DataGridDemo({rows,columns}) {
         height: '80vh', 
       }}
     >
-      <Box sx={{ height: 400, width: '80%' }}>
+      <Box sx={{ height: 400, width: '65%' }}>
+      <h3 className="text-xl font-bold border border-solid">{name}</h3>
         <DataGrid
           rows={rows}
           columns={columns}

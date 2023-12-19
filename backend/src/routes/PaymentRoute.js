@@ -1,10 +1,10 @@
 const express= require("express");
-const Payment = require("../controllers/Payments")
+const Payment = require("../controllers/Payments");
+const AuthMiddle = require("../middlewares/authMiddle");
 const rout= express.Router();
 
-rout.post('/create',Payment.createPayments);
-rout.get('/payments',Payment.getAppartementPaye);
-// rout.post('/generate',Payment.generateFacturePaie);
-rout.get('/generate/:id',Payment.generateFacturePaie);
+rout.post('/create',AuthMiddle.userLogged,Payment.createPayments);
+rout.get('/payments',AuthMiddle.userLogged,Payment.getAppartementPaye);
+rout.get('/generate/:id',AuthMiddle.userLogged,Payment.generateFacturePaie);
 
 module.exports=rout;

@@ -3,12 +3,12 @@ import Header from '../components/header';
 import Tableau from '../components/tableau';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import axios from 'axios';
+import api from '../utils/api';
 import { Button } from "@mui/material";
 import DynamicFormModal from "../components/modal";
 const CustomRowActions = ({ onEditClick, onDeleteClick }) => (
   <>
-    <EditIcon onClick={onEditClick} style={{ cursor: 'pointer', marginRight: 8,color:'orange' }} />
+    <EditIcon onClick={onEditClick} style={{ cursor: 'pointer', marginRight: 8,color:'blue' }} />
     <DeleteIcon onClick={onDeleteClick} style={{ cursor: 'pointer',color:'red'  }} />
   </>
 );
@@ -29,7 +29,7 @@ const Appertement = () => {
 
   const getAppartement = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/appertement/getAllAppertement");
+      const response = await api.get("/appertement/getAllAppertement",{ withCredentials: true});
       const transformedRows = response.data.map((item, index) => ({
          id: item._id, 
         _id:index,
@@ -45,7 +45,7 @@ const Appertement = () => {
   }, []);
   const handleFormSubmit = async (formData) => {
     try {
-      const response= await axios.post("http://localhost:5000/api/appertement/AddAppartement",formData)
+      const response= await api.post("/appertement/AddAppartement",formData,{ withCredentials: true})
       console.log(response.data,"res");
       getAppartement();
     } catch (error) {
@@ -60,7 +60,7 @@ const Appertement = () => {
   const handleDeleteClick = async(id) => {
     alert("are you sure you wante delete this row")
     try {
-      const response=await axios.put(`http://localhost:5000/api/appertement/delete/${id}`);
+      const response=await api.put(`/appertement/delete/${id}`,{ withCredentials: true});
       console.log(response.data)
       getAppartement();
     } catch (error) {
@@ -169,7 +169,7 @@ const Appertement = () => {
   };
  const handleEditSubmit=async(formData)=>{
   try {
-    const response= await axios.put(`http://localhost:5000/api/appertement/updateAppertement/${selectedRowId}`,formData)
+    const response= await api.put(`/appertement/updateAppertement/${selectedRowId}`,formData,{ withCredentials: true})
         console.log(response.data,"what");
         getAppartement();
   } catch (error) {

@@ -8,15 +8,14 @@ const AppertementRoute = require("./src/routes/AppertementRoute");
 const PaymentRoute=require("./src/routes/PaymentRoute");
 const cors = require('cors');
 const app= express();
-
-app.use(
+  app.use(express.json());
+  app.use(cookieParser(process.env.JWT_SECRET));
+  app.use(
   cors({
       origin: "http://localhost:5173",
       credentials: true,
   })
 );
-app.use(express.json());
-app.use(cookieParser());
 
 app.use("/api/auth",AuthRoute);
 app.use("/api/appertement",AppertementRoute);

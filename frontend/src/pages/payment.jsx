@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/header';
 import Tableau from '../components/tableau';
-import axios from 'axios';
+import api from '../utils/api'
 import { Button } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 
 
 const CustomRowActions=({onPiementClick})=>(
   <Button onClick={onPiementClick}>
-    Pie
+    Pay
   </Button>
 )
 const CustomRowActions2 = ({ onImprim }) => (
@@ -78,7 +78,7 @@ const renderRowActions = (id) => (
 
   const getAllAppertement= async()=>{
     try {
-      const response=await axios.get("http://localhost:5000/api/payments/payments")
+      const response=await api.get("/payments/payments",{ withCredentials: true})
       const appartementPaied= response.data.paids.map((res)=>res.appartement)
       console.log(appartementPaied,"hello")
       const rows = response.data.unpaids.map((item,index)=>({
@@ -103,7 +103,7 @@ const renderRowActions = (id) => (
   const handlePaimentClick= async(id)=>{
     console.log(id)
     try {
-      const response =await axios.post("http://localhost:5000/api/payments/create",{id:id})
+      const response =await api.post("/payments/create",{id:id},{ withCredentials: true})
       console.log(response.data);
       getAllAppertement();
     } catch (error) {
@@ -112,7 +112,7 @@ const renderRowActions = (id) => (
   }
   const handleImprimClick=async(id)=>{
     try {
-      // const response =await axios.post("http://localhost:5000/api/payments/generate",{id:id})
+      // const response =await api.post("""/payments/generate",{id:id})
       // console.log(response.data);
       const url = `http://localhost:5000/api/payments/generate/${id}`;
         window.open(url, "_blank");
@@ -123,12 +123,8 @@ const renderRowActions = (id) => (
   return (
     <>
      <Header />
-      <div className="w-full flex justify-center mt-4 ">
-        <h3 className="text-2xl">appertement unpie</h3>
-      </div>
-     <Tableau columns={columnsWithActions} rows={unpaie}/>
-     <div className="w-full flex justify-center"><h3 className="text-2xl">appertement pied</h3></div>
-     <Tableau columns={columnsWithActions2} rows={paied}/>
+     <Tableau columns={columnsWithActions} rows={unpaie} title={"Appartement unpied"}/>
+     <Tableau columns={columnsWithActions2} rows={paied} title={"Appartement pied"}/>
     </>
   )
 }

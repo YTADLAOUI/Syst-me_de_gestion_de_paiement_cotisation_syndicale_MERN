@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import loginImage from '../assets/images/login.jpg';
+import api from "../utils/api"
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 const header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [Open, setOpen] = useState(false);
@@ -11,14 +12,16 @@ const header = () => {
   const toggleHambergar= ()=>{
     setOpen(!Open)
   }
-  const logOut=()=>{
-    localStorage.removeItem('token')
+  const logOut=async()=>{
+    const response=await api.post('/auth/logout',{},{ withCredentials: true});
+    console.log(response.data);
+    Cookies.remove('Token')
     navigate('/login');
    }
   return (
       <>
               
-          <nav className="bg-blue-400 ">
+          <nav className="bg-blue-800">
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -49,7 +52,7 @@ const header = () => {
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              <button type="button" className="relative rounded-full bg-blue-400 p-1 text-400 hover:text-black text-white">
+              <button type="button" className="relative rounded-full bg-blue-800 p-1 text-400 hover:text-black text-white">
                 <span className="absolute -inset-1.5"></span>
                 <span className="sr-only">View notifications</span>
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
